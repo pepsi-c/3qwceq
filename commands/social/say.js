@@ -11,11 +11,9 @@ module.exports = {
 
         if(message.guild.id === '615719863335518237') return;
         if(!args[0]) return message.channel.send('Please specify some text to say.');
-
-        if(message.content.includes('@everyone')) return message.channel.send('Nice try, you cannot mass ping.')
-        if(message.content.includes('@here')) return message.channel.send('Nice try, you cannot mass ping.')
         if(message.content.includes('@Verified')) return message.channel.send('Nice try, you cannot mass ping.')
-                                                                                                                                 
+        if(message.content.includes('@everyone')) return message.channel.send('Nice try, you cannot mass ping.')
+        if(message.content.includes('@here')) return message.channel.send('Nice try, you cannot mass ping.')                     
         message.channel.send(args.join(' '));
 
     }
