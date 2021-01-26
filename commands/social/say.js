@@ -14,7 +14,8 @@ module.exports = {
 
         if(message.content.includes('@everyone')) return message.channel.send('Nice try, you cannot mass ping.')
         if(message.content.includes('@here')) return message.channel.send('Nice try, you cannot mass ping.')
-
+        if(message.content.includes('@Verified')) return message.channel.send('Nice try, you cannot mass ping.')
+                                                                                                                                 
         message.channel.send(args.join(' '));
 
     }
