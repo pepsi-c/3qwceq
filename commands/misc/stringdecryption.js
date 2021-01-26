@@ -3,7 +3,7 @@ const crypto = require('crypto')
 
 module.exports = {
         name: "stringdecrption",
-        aliases: ["sd", "sdecrypt"],
+        aliases: ["sd", "sdecrypt","stringdecrption"],
         category: "Misc",
         description: "Decrypt some string",
         usage: "$sd <key> <string>",

@@ -2,7 +2,7 @@ const discord = require('discord.js');
 
 module.exports = {
         name: "Download",
-        aliases: ["Download", "Download"],
+        aliases: ["D", "d", "Download", "download"],
         category: "Info",
         description: "Download the stuff",
         usage: "$Download",
@@ -15,10 +15,6 @@ module.exports = {
                     .setTitle('Download')
         
                     message.channel.send(embed)
-
-
-            
- 
 
         } catch (error) {
             return message.channel.send('Error!');

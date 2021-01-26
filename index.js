@@ -1,10 +1,10 @@
 const botconfig = require('./botconfig.json');
-const prefix = process.env.PREFIX;
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
 const blacklistUsers = "./blacklist.json"
 const badLinks = require("./badLinks.json") 
+//const token = process.env.BOT_TOKEN;
 
 const AntiSpam = require('discord-anti-spam');
 const antiSpam = new AntiSpam({
@@ -21,7 +21,7 @@ const antiSpam = new AntiSpam({
     //exemptPermissions: [ 'ADMINISTRATOR'], // Bypass users with any of these permissions.
     ignoreBots: true, // Ignore bot messages.
     verbose: false, // Extended Logs from module.
-    ignoredUsers: ['615719863335518237'], // Array of User IDs that get ignored.
+    ignoredUsers: ['299263276028788737'], // Array of User IDs that get ignored.
     // And many more options... See the documentation.
 });
 
@@ -29,9 +29,7 @@ const antiSpam = new AntiSpam({
 
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is up and running in ${bot.guilds.cache.size} servers.`)
-    bot.user.setActivity(`${bot.guilds.cache.size} servers | $help`, {type: "STREAMING",url:"https://www.twitch.tv/lobanjicaa"  }), 59
-});
-
+    bot.user.setActivity(`${bot.guilds.cache.size} servers | ${bot.prefix}help`, {type: "STREAMING",url:"https://www.twitch.tv/lobanjicaa"  }), 59});
 
 
 
@@ -62,7 +60,7 @@ bot.on('message', async (message) =>{
 	if(badLinks.some(link => message.content.toLowerCase().includes(link))){
 
 		message.delete()
-		message.channel.send('Possible IP Logger/Shortner Detected! loGED')
+		message.channel.send('Possible IP Logger/Shortner Detected!')
 		try {
 			//Find the logs channel
 		var logChannel = message.guild.channels.cache.find(channel => channel.name.toLowerCase() === "logs")
@@ -80,7 +78,7 @@ bot.on('message', async (message) =>{
 	
 		let embed = new Discord.MessageEmbed()
 		.setColor('#000000')
-		.setAuthor('Altantis | Moderation', bot.user.avatarURL())
+		.setAuthor('Altantis | Mod', bot.user.avatarURL())
 		.setThumbnail(message.author.avatarURL())
 		.setTitle(`Possible IP Logger/Shortner Deleted: ${message.author.tag}`)
 		.addField('Message', message.content.substr(0,500) + (message.content.length > 500 ? "..." : ""))
@@ -101,9 +99,9 @@ bot.on('message', async (message) =>{
 
     if(message.author.bot) return;
     if(!message.guild && !message.channel.type === 'dm') return;
-    if(!message.content.startsWith(prefix)) return;
+    if(!message.content.startsWith(botconfig.prefix)) return;
 
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(botconfig.prefix.length).trim().split(/ +/g);
     const cmd = args.shift().toLowerCase();
 
     if(cmd.length === 0) return;
@@ -119,7 +117,7 @@ bot.on('message', async (message) =>{
 		}
 
 		if(command){
-			command.run(bot, message, args, blacklistUsers)
+			command.run(bot, message, args, blacklistUsers, botconfig)
 		}
 	})
 
@@ -271,10 +269,6 @@ bot.on("messageUpdate", async (oldMsg, newMsg) => {
 
 
 
-
-
-
-
 bot.on("disconnect", function(event) {
 	console.log(
 	  `The WebSocket has closed and will no longer attempt to reconnect`
@@ -283,4 +277,5 @@ bot.on("disconnect", function(event) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-bot.login(process.env.TOKEN);
+bot.login(process.env.BOT_TOKEN);
+//botconfig.token
